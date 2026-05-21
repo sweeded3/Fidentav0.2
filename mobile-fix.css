@@ -1,5 +1,45 @@
-/* V2 mobile fixes: decorative icons, compact footer, menu support */
+/* V2 mobile fixes: decorative icons, compact footer, visible mobile menu */
 @media (max-width: 740px) {
+  .topbar__inner {
+    height: auto !important;
+    min-height: 76px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    padding: 12px 0 10px !important;
+  }
+
+  .brand {
+    min-width: 0 !important;
+  }
+
+  .nav {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .nav a {
+    padding: 9px 6px !important;
+    border: 1px solid var(--line) !important;
+    background: rgba(255,250,241,.56) !important;
+    font-size: 11px !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    white-space: normal !important;
+  }
+
+  .nav a.active:after {
+    display: none !important;
+  }
+
+  .top-actions {
+    display: none !important;
+  }
+
   .service-card:before,
   .service-icon {
     display: none !important;
