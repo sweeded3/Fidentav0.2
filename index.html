@@ -84,12 +84,13 @@
       background:rgba(255,250,241,.28);
     }
     @media(max-width:740px){
-      .demo-footer-nav{align-items:flex-start}
-      .demo-footer-nav a{min-height:30px;padding:6px 8px}
+      .demo-footer-nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;align-items:stretch;font-size:9px;letter-spacing:.08em}
+      .demo-footer-nav__label{grid-column:1/-1;margin-bottom:2px}
+      .demo-footer-nav a{min-height:34px;padding:7px 8px;text-align:center;white-space:normal;line-height:1.2}
     }
 
     @media(max-width:1100px){.nav{display:none}.hero__grid,.section__head,.service-top,.cta,.footer__grid{grid-template-columns:1fr}.services-grid,.portfolio-tease{grid-template-columns:1fr 1fr}.service-card:nth-child(3n){border-right:1px solid var(--line)}.service-card:nth-child(2n){border-right:0}.process-strip{grid-template-columns:1fr 1fr}.hero h1{font-size:64px}.section__head h2{font-size:52px}}
-    @media(max-width:740px){.wrap{width:calc(100% - 28px)}.cta{width:calc(100% - 28px)}.topbar__inner{height:76px}.brand__name{font-size:22px}.top-actions{display:none}.hero{padding-top:28px}.hero__copy{padding:32px 24px;min-height:0}.hero__image{min-height:360px}.hero h1{font-size:52px}.hero p{font-size:16px}.hero__actions{flex-direction:column;align-items:stretch}.hero__metrics{grid-template-columns:1fr 1fr}.metric{border-bottom:1px solid var(--line)}.section__head h2{font-size:44px}.services-grid,.portfolio-tease{grid-template-columns:1fr}.service-card,.service-card:nth-child(2n),.service-card:nth-child(3n){border-right:0}.service-card:nth-last-child(-n+3){border-bottom:1px solid var(--line)}.process-strip{grid-template-columns:1fr}.process-item{border-right:0;border-bottom:1px solid var(--line)}.cta__side,.cta__panel{padding:32px 24px}.cta h2{font-size:34px}.footer__col{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}.footer__bottom{display:grid}}
+    @media(max-width:740px){.wrap{width:calc(100% - 28px)}.cta{width:calc(100% - 28px)}.topbar__inner{height:76px}.brand__name{font-size:22px}.top-actions{display:none}.hero{padding-top:28px}.hero__copy{padding:32px 24px;min-height:0}.hero__image{min-height:360px}.hero h1{font-size:52px}.hero p{font-size:16px}.hero__actions{flex-direction:column;align-items:stretch}.hero__metrics{grid-template-columns:1fr 1fr}.metric{border-bottom:1px solid var(--line)}.section__head h2{font-size:44px;line-height:1.08;padding-top:.08em;overflow:visible}.services-grid,.portfolio-tease{grid-template-columns:1fr}.service-card,.service-card:nth-child(2n),.service-card:nth-child(3n){border-right:0}.service-card:nth-last-child(-n+3){border-bottom:1px solid var(--line)}.process-strip{grid-template-columns:1fr}.process-item{border-right:0;border-bottom:1px solid var(--line)}.cta__side,.cta__panel{padding:32px 24px}.cta h2{font-size:34px;line-height:1.08;padding-top:.08em;overflow:visible}.footer__col{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}.footer__bottom{display:grid}}
   </style>
 </head>
 <body>
@@ -364,7 +365,7 @@
 <a href="https://sweeded3.github.io/Fidentav0.4/">V4</a>
       <a class="demo-footer-nav__main" href="presentation.html#hero">Презентация</a>
       <a class="demo-footer-nav__download" href="docs/fidenta-kp.docx" download>Скачать КП</a>
-      <a class="demo-footer-nav__download" href="docs/fidenta-contract.docx" download>Отправляем договор</a>
+      <a class="demo-footer-nav__download" href="docs/fidenta-contract.docx" download>Скачать договор</a>
     </div>
 
     <div class="wrap footer__bottom">
