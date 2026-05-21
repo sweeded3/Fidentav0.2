@@ -1,0 +1,45 @@
+/* V2 mobile fixes: decorative icons, compact footer, menu support */
+@media (max-width: 740px) {
+  .service-card:before,
+  .service-icon {
+    display: none !important;
+  }
+
+  .service-card h4 {
+    margin-top: 22px !important;
+    padding-top: .08em !important;
+    line-height: 1.08 !important;
+    overflow: visible !important;
+    max-width: none !important;
+  }
+
+  .section__head h2,
+  .service-top__copy h3,
+  .cta h2 {
+    line-height: 1.08 !important;
+    padding-top: .08em !important;
+    overflow: visible !important;
+  }
+
+  .demo-footer-nav {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    align-items: stretch !important;
+    font-size: 9px !important;
+    letter-spacing: .08em !important;
+  }
+
+  .demo-footer-nav__label {
+    grid-column: 1 / -1 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .demo-footer-nav a {
+    min-height: 34px !important;
+    padding: 7px 8px !important;
+    text-align: center !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+  }
+}
