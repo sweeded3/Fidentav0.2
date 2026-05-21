@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Фидента — управление объектами и доходной недвижимостью</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --paper:#f4eee3; --paper-2:#fbf7ef; --ivory:#fffaf1; --stone:#ebe0d0;
+      --ink:#20231f; --ink-soft:#3a3c36; --muted:#81796d; --muted-2:#aaa090;
+      --line:#ded1bd; --line-strong:#c7b18f;
+      --gold:#a77743; --gold-2:#8a6234; --gold-soft:#e6d4b7; --sage:#7f987e; --sage-soft:#dfe8dc;
+      --shadow:0 28px 84px rgba(68,50,28,.09);
+      --serif:'Cormorant Garamond', Georgia, serif;
+      --sans:'Manrope', system-ui, -apple-system, Segoe UI, sans-serif;
+      --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      --container:1360px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(circle at 14% 2%,rgba(255,255,255,.9),transparent 34%),linear-gradient(180deg,var(--paper-2),var(--paper));color:var(--ink);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased;}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.28;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:96px 96px;mask-image:linear-gradient(180deg,rgba(0,0,0,.68),rgba(0,0,0,.12) 42%,transparent 86%)}
+    body:after{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background:radial-gradient(circle at 82% 24%,rgba(167,119,67,.24),transparent 28%),radial-gradient(circle at 12% 80%,rgba(127,152,126,.24),transparent 22%)}
+    a{text-decoration:none;color:inherit}.wrap{width:min(var(--container),calc(100% - 64px));margin:0 auto}.mono{font-family:var(--mono)}
+    .topbar{position:sticky;top:0;z-index:30;background:rgba(251,247,239,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+    .topbar__inner{height:92px;display:flex;align-items:center;justify-content:space-between;gap:28px}.brand{display:flex;align-items:center;gap:16px;min-width:250px}.mark{width:42px;height:42px;border:1px solid var(--gold);color:var(--gold);display:grid;place-items:center;font-family:var(--serif);font-size:30px;line-height:1;background:rgba(255,250,241,.5)}
+    .brand__name{font-family:var(--serif);font-weight:600;font-size:28px;letter-spacing:.18em;text-transform:uppercase;line-height:.9}.brand__sub{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:5px}.nav{display:flex;align-items:center;gap:4px}.nav a{position:relative;padding:34px 18px;font-size:14px;color:var(--ink-soft)}.nav a.active,.nav a:hover{color:var(--gold)}.nav a.active:after{content:"";position:absolute;left:18px;right:18px;bottom:0;height:2px;background:var(--gold)}
+    .top-actions{display:flex;align-items:center;gap:10px}.nav-login,.nav-cta{height:44px;padding:0 18px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:13px;transition:.25s}.nav-login{border:1px solid var(--line-strong);background:rgba(255,250,241,.54);color:var(--ink-soft)}.nav-login:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}.nav-cta{border:1px solid var(--gold);background:#b28450;color:#fff}.nav-cta:hover{background:#9f7442;transform:translateY(-1px)}
+    .hero{position:relative;padding:66px 0 52px}.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:stretch}.hero__copy{border:1px solid var(--line);background:rgba(255,250,241,.62);padding:54px 58px 44px;min-height:560px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:var(--shadow)}
+    .eyebrow{margin:0 0 14px;color:var(--gold);font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase}.hero h1{font-family:var(--serif);font-size:82px;line-height:.9;font-weight:500;letter-spacing:-.045em;margin:0 0 26px}.hero p{max-width:560px;font-size:19px;line-height:1.62;color:var(--ink-soft);margin:0}.hero__actions{display:flex;gap:12px;align-items:center;margin-top:34px}.btn{height:48px;padding:0 20px;border:1px solid var(--line);background:rgba(255,250,241,.72);display:inline-flex;align-items:center;justify-content:center;gap:10px;transition:.25s;font-size:14px}.btn:hover{border-color:var(--gold);transform:translateY(-1px)}.btn--gold{border-color:var(--gold);background:#b28450;color:#fff}.btn--text{border-color:transparent;background:transparent;color:var(--gold);padding-left:6px}
+    .hero__image{position:relative;min-height:560px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow);background:#d8cab9}.hero__image img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.9) contrast(.96)}.hero__image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(32,35,31,.38)),linear-gradient(90deg,rgba(244,238,227,.2),transparent 40%)}.photo-label{position:absolute;left:22px;bottom:22px;z-index:2;max-width:calc(100% - 44px);padding:10px 16px;border:1px solid rgba(255,250,241,.36);background:rgba(32,35,31,.42);backdrop-filter:blur(10px);color:#fffaf1;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;white-space:normal;line-height:1.45}.hero__image > .photo-label{left:22px;right:22px;max-width:none;text-align:center;display:block;}.hero__metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-top:0;background:rgba(255,250,241,.58)}.metric{padding:22px 24px;border-right:1px solid var(--line)}.metric:last-child{border-right:0}.metric__value{font-family:var(--serif);font-size:42px;line-height:1;letter-spacing:-.035em;color:var(--ink)}.metric__label{font-size:12px;color:var(--muted);margin-top:7px}
+    .section{padding:58px 0}.section--services{padding-top:32px}.section__head{display:grid;grid-template-columns:.84fr 1fr;gap:80px;margin-bottom:28px;align-items:end}.section__head h2{font-family:var(--serif);font-weight:500;font-size:64px;line-height:.95;letter-spacing:-.035em;margin:0}.section__head p{font-size:17px;color:var(--ink-soft);line-height:1.7;margin:0;max-width:640px}.service-shell{border:1px solid var(--line);background:rgba(255,250,241,.58);box-shadow:var(--shadow)}
+    .service-top{display:grid;grid-template-columns:1.12fr .88fr;border-bottom:1px solid var(--line)}.service-top__visual{position:relative;min-height:360px;overflow:hidden;background:#d7cab7}.service-top__visual img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.86) contrast(.96)}.service-top__visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(32,35,31,.34))}.service-top__copy{padding:44px 48px;display:flex;flex-direction:column;justify-content:center}.service-top__copy h3{font-family:var(--serif);font-weight:500;font-size:48px;line-height:1;margin:10px 0 16px;letter-spacing:-.025em}.service-top__copy p{font-size:16px;color:var(--ink-soft);line-height:1.72;margin:0 0 28px}.control-line{display:grid;gap:11px}.control-line__row{display:flex;align-items:center;gap:11px;font-size:14px;color:var(--ink-soft)}.dot{width:9px;height:9px;border-radius:50%;background:var(--sage);box-shadow:0 0 0 6px rgba(127,152,126,.11)}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr)}.service-card{position:relative;min-height:350px;padding:30px 28px 26px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;background:rgba(255,250,241,.44);overflow:hidden}.service-card:nth-child(3n){border-right:0}.service-card:nth-last-child(-n+3){border-bottom:0}.service-card:hover{background:rgba(255,250,241,.78)}.service-card:before{content:"";position:absolute;right:24px;top:28px;width:74px;height:74px;border:1px solid var(--line-strong);border-radius:50%;opacity:.78}.service-icon{position:absolute;right:42px;top:46px;width:38px;height:38px;color:var(--gold);opacity:.86;z-index:1}.service-icon svg{width:100%;height:100%;stroke:currentColor;stroke-width:1.25;fill:none;stroke-linecap:round;stroke-linejoin:round}.service-num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}.service-card h4{font-family:var(--serif);font-size:34px;line-height:1.02;font-weight:500;letter-spacing:-.025em;margin:40px 0 16px;max-width:320px}.service-card p{font-size:14px;color:var(--ink-soft);line-height:1.68;margin:0;max-width:350px}.service-list{display:grid;gap:9px;margin-top:28px}.service-list span{position:relative;padding-left:18px;font-size:12px;color:var(--muted)}.service-list span:before{content:"";position:absolute;left:0;top:.72em;width:7px;height:1px;background:var(--gold)}
+    .service-card--accent{background:#252721;color:#fffaf1}.service-card--accent p,.service-card--accent .service-list span{color:rgba(255,250,241,.74)}.service-card--accent .service-num,.service-card--accent h4{color:#fffaf1}.service-card--accent .service-icon{color:#e6d4b7;opacity:.92}.service-card--accent:before{border-color:rgba(255,250,241,.34)}
+    .process-strip{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);background:rgba(244,238,227,.46)}.process-item{padding:22px 24px;border-right:1px solid var(--line);min-height:128px}.process-item:last-child{border-right:0}.process-item b{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--gold);margin-bottom:18px}.process-item span{font-size:14px;color:var(--ink-soft);line-height:1.48}.portfolio-tease{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:30px}.tease-card{min-height:260px;border:1px solid var(--line);background:rgba(255,250,241,.62);display:grid;grid-template-columns:1fr 1fr;overflow:hidden}.tease-card__image{position:relative;background:#d7cab7}.tease-card__image img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.82)}.tease-card__text{padding:24px;display:flex;flex-direction:column;justify-content:space-between}.tease-card .label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}.tease-card h3{font-family:var(--serif);font-weight:500;font-size:30px;line-height:1;margin:16px 0 8px}.tease-card p{font-size:13px;line-height:1.6;color:var(--muted);margin:0}.tease-card .small{font-family:var(--mono);font-size:11px;color:var(--muted)}
+    .cta{width:min(1180px,calc(100% - 64px));margin:64px auto 70px;border:1px solid var(--line);background:#262720;color:#fffaf1;display:grid;grid-template-columns:.78fr 1.14fr .78fr;min-height:380px;overflow:hidden}.cta__side{padding:46px 36px;display:flex;flex-direction:column;justify-content:center;position:relative}.cta__side:first-child{border-right:1px solid rgba(255,250,241,.14);text-align:left}.cta__side:last-child{border-left:1px solid rgba(255,250,241,.14);text-align:left}.cta__side:before{content:"";width:42px;height:42px;border:1px solid rgba(230,212,183,.34);border-radius:50%;margin-bottom:24px}.cta .eyebrow{color:#e6d4b7}.cta h2{font-family:var(--serif);font-size:40px;line-height:1;font-weight:500;letter-spacing:-.03em;margin:0 0 18px}.cta p{color:rgba(255,250,241,.72);font-size:14px;line-height:1.72;margin:0}.cta__panel{padding:40px 46px;display:grid;align-content:center;justify-items:stretch;gap:12px;background:linear-gradient(180deg,rgba(255,250,241,.07),rgba(255,250,241,.026));text-align:center}.cta__panel-title{font-family:var(--serif);font-size:36px;line-height:1;margin:0 0 10px;font-weight:500}.field{height:52px;border:1px solid rgba(255,250,241,.2);padding:0 16px;color:rgba(255,250,241,.76);display:flex;align-items:center;justify-content:space-between;font-size:14px;text-align:left}.field span:last-child{color:rgba(230,212,183,.58);font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase}.cta .btn--gold{height:54px;margin-top:8px;justify-content:center}.footer{border-top:1px solid var(--line);padding:0;color:var(--muted);font-size:12px}.footer__grid{display:grid;grid-template-columns:1.2fr .72fr .82fr .9fr 1fr;gap:0;border-left:1px solid var(--line);border-right:1px solid var(--line);background:rgba(255,250,241,.5)}.footer__col{padding:32px 28px;border-right:1px solid var(--line);min-height:210px}.footer__col:last-child{border-right:0}.footer__title{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}.footer__links{display:grid;gap:10px}.footer__links a,.footer__links span{color:var(--ink-soft);font-size:13px}.footer__note{line-height:1.65;color:var(--muted);max-width:360px}.footer__bottom{border-top:1px solid var(--line);padding:18px 0 28px;display:flex;justify-content:space-between;gap:24px;color:var(--muted);font-size:11px}
+    .demo-footer-nav{
+      margin-top:22px;
+      padding:18px 0 0;
+      border-top:1px solid var(--line);
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      gap:10px 12px;
+      font-family:var(--mono);
+      font-size:10px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color:rgba(129,121,109,.72);
+    }
+    .demo-footer-nav__label{color:rgba(129,121,109,.56)}
+    .demo-footer-nav a{
+      min-height:32px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px 10px;
+      border:1px solid transparent;
+      color:rgba(58,60,54,.64);
+      transition:.22s ease;
+    }
+    .demo-footer-nav a:hover{
+      color:var(--gold);
+      border-color:rgba(167,119,67,.28);
+      background:rgba(255,250,241,.42);
+      transform:translateY(-1px);
+    }
+    .demo-footer-nav a.is-active{
+      color:var(--gold);
+      border-color:rgba(167,119,67,.42);
+      background:rgba(167,119,67,.08);
+    }
+    .demo-footer-nav__main{
+      color:var(--gold) !important;
+      border-color:rgba(167,119,67,.36) !important;
+      background:rgba(255,250,241,.35);
+    }
+    .demo-footer-nav__download{
+      border-color:rgba(199,177,143,.6) !important;
+      background:rgba(255,250,241,.28);
+    }
+    @media(max-width:740px){
+      .demo-footer-nav{align-items:flex-start}
+      .demo-footer-nav a{min-height:30px;padding:6px 8px}
+    }
+
+    @media(max-width:1100px){.nav{display:none}.hero__grid,.section__head,.service-top,.cta,.footer__grid{grid-template-columns:1fr}.services-grid,.portfolio-tease{grid-template-columns:1fr 1fr}.service-card:nth-child(3n){border-right:1px solid var(--line)}.service-card:nth-child(2n){border-right:0}.process-strip{grid-template-columns:1fr 1fr}.hero h1{font-size:64px}.section__head h2{font-size:52px}}
+    @media(max-width:740px){.wrap{width:calc(100% - 28px)}.cta{width:calc(100% - 28px)}.topbar__inner{height:76px}.brand__name{font-size:22px}.top-actions{display:none}.hero{padding-top:28px}.hero__copy{padding:32px 24px;min-height:0}.hero__image{min-height:360px}.hero h1{font-size:52px}.hero p{font-size:16px}.hero__actions{flex-direction:column;align-items:stretch}.hero__metrics{grid-template-columns:1fr 1fr}.metric{border-bottom:1px solid var(--line)}.section__head h2{font-size:44px}.services-grid,.portfolio-tease{grid-template-columns:1fr}.service-card,.service-card:nth-child(2n),.service-card:nth-child(3n){border-right:0}.service-card:nth-last-child(-n+3){border-bottom:1px solid var(--line)}.process-strip{grid-template-columns:1fr}.process-item{border-right:0;border-bottom:1px solid var(--line)}.cta__side,.cta__panel{padding:32px 24px}.cta h2{font-size:34px}.footer__col{min-height:auto;border-right:0;border-bottom:1px solid var(--line)}.footer__bottom{display:grid}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar__inner">
+      <a class="brand" href="#top" aria-label="Фидента">
+        <div class="mark">Ф</div>
+        <div><div class="brand__name">Фидента</div><div class="brand__sub">управляющая компания</div></div>
+      </a>
+      <nav class="nav" aria-label="Навигация">
+        <a class="active" href="#top">Главная</a><a href="invest.html">Инвестиции</a><a href="#services">Услуги</a><a href="#objects">Объекты</a><a href="#contacts">Контакты</a>
+      </nav>
+      <div class="top-actions">
+        <a class="nav-login" href="lk.html">Личный кабинет</a>
+        <a class="nav-cta" href="#contacts">Оставить заявку</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="wrap">
+        <div class="hero__grid">
+          <div class="hero__copy">
+            <div>
+              <p class="eyebrow">Санкт-Петербург · управление недвижимостью</p>
+              <h1>Ваши активы —<br> под управлением</h1>
+              <p>Профессиональное управление коммерческой и жилой недвижимостью: арендаторы, эксплуатация, юридический контур, финансы и регулярная отчётность в одном ответственном процессе.</p>
+              <div class="hero__actions">
+                <a class="btn btn--gold" href="#contacts">Обсудить объект</a>
+                <a class="btn" href="#services">Смотреть услуги</a>
+                <a class="btn btn--text" href="#process">Как работаем →</a>
+              </div>
+            </div>
+            <div class="hero__metrics">
+              <div class="metric"><div class="metric__value">47+</div><div class="metric__label">объектов под управлением</div></div>
+              <div class="metric"><div class="metric__value">12</div><div class="metric__label">лет на рынке управления</div></div>
+              <div class="metric"><div class="metric__value">98%</div><div class="metric__label">средняя заполняемость</div></div>
+              <div class="metric"><div class="metric__value">24/7</div><div class="metric__label">аварийное реагирование</div></div>
+            </div>
+          </div>
+          <div class="hero__image">
+            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=82" alt="Фасад коммерческого здания">
+            <div class="photo-label">коммерческая недвижимость · объект под управлением · доходная система</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--services" id="services">
+      <div class="wrap">
+        <div class="section__head">
+          <div>
+            <p class="eyebrow">Услуги</p>
+            <h2>Полный контур управления недвижимостью</h2>
+          </div>
+          <p>Фидента берёт объект под операционный контроль: формирует арендный поток, поддерживает техническое состояние, ведёт договоры, отчётность и коммуникацию с собственником. Услуга устроена не как разовый сервис, а как система постоянного управления активом.</p>
+        </div>
+
+        <div class="service-shell">
+          <div class="service-top">
+            <div class="service-top__visual">
+              <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=82" alt="Интерьер бизнес-центра">
+              <div class="photo-label">объект · состояние · представительский уровень</div>
+            </div>
+            <div class="service-top__copy">
+              <p class="eyebrow">управленческая модель</p>
+              <h3>Собственник видит результат, а не операционную рутину</h3>
+              <p>Мы соединяем финансовую дисциплину, техническую эксплуатацию и работу с арендаторами в единый управленческий цикл: от аудита объекта до ежемесячного отчёта и решений по повышению доходности.</p>
+              <div class="control-line">
+                <div class="control-line__row"><i class="dot"></i><span>Арендный поток подтверждён договорами и платежной дисциплиной</span></div>
+                <div class="control-line__row"><i class="dot"></i><span>Эксплуатация ведётся по регламентам, подрядчики контролируются</span></div>
+                <div class="control-line__row"><i class="dot"></i><span>Собственник получает прозрачную финансовую и юридическую отчётность</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="services-grid">
+            <article class="service-card service-card--accent">
+              <div>
+                <div class="service-num">01 · доход</div>
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 32h28"/><path d="M14 32V18h7v14"/><path d="M27 32V12h7v20"/><path d="M9 38h30"/><path d="M34 12l4 4"/></svg></div>
+                <h4>Арендные отношения</h4>
+                <p>Поиск и удержание надёжных арендаторов, оформление договоров, контроль оплат и управление вакансиями без лишнего простоя площадей.</p>
+              </div>
+              <div class="service-list">
+                <span>подбор арендаторов и переговоры</span>
+                <span>контроль расчётов и задолженности</span>
+                <span>продление договоров и ротация</span>
+              </div>
+            </article>
+            <article class="service-card">
+              <div>
+                <div class="service-num">02 · объект</div>
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 15h18v18H15z"/><path d="M9 24h6M33 24h6"/><path d="M19 24h10"/></svg></div>
+                <h4>Техническая эксплуатация</h4>
+                <p>Плановое и аварийное обслуживание инженерных систем, контроль подрядчиков и ведение технической документации.</p>
+              </div>
+              <div class="service-list">
+                <span>регламентные осмотры и ТО</span>
+                <span>аварийное реагирование</span>
+                <span>контроль качества работ</span>
+              </div>
+            </article>
+            <article class="service-card">
+              <div>
+                <div class="service-num">03 · право</div>
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M15 9h14l6 6v24H15z"/><path d="M29 9v7h7"/><path d="M19 24h13M19 30h13"/><path d="M19 18h5"/></svg></div>
+                <h4>Юридическое сопровождение</h4>
+                <p>Договорная работа, взаимодействие с контролирующими органами, защита интересов собственника и сопровождение спорных ситуаций.</p>
+              </div>
+              <div class="service-list">
+                <span>договоры аренды и акты</span>
+                <span>работа с претензиями</span>
+                <span>юридический архив объекта</span>
+              </div>
+            </article>
+            <article class="service-card">
+              <div>
+                <div class="service-num">04 · финансы</div>
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M10 34h28"/><path d="M14 30l7-8 6 5 8-12"/><path d="M31 15h4v4"/></svg></div>
+                <h4>Финансовое управление</h4>
+                <p>Бюджетирование, реестр платежей, контроль расходов и регулярная отчётность по каждому рублю дохода и затрат объекта.</p>
+              </div>
+              <div class="service-list">
+                <span>ежемесячный финансовый отчёт</span>
+                <span>план/факт по расходам</span>
+                <span>прозрачная структура выплат</span>
+              </div>
+            </article>
+            <article class="service-card">
+              <div>
+                <div class="service-num">05 · среда</div>
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M12 29c8-16 18-16 24 0"/><path d="M17 28c3 3 11 3 14 0"/><path d="M14 36h20"/></svg></div>
+                <h4>Клининг и благоустройство</h4>
+                <p>Поддержание представительского состояния общих зон и территории, графики работ, контроль подрядчика и качества обслуживания.</p>
+              </div>
+              <div class="service-list">
+                <span>общие зоны и входные группы</span>
+                <span>территория и сезонные работы</span>
+                <span>фотофиксация состояния</span>
+              </div>
+            </article>
+            <article class="service-card">
+              <div>
+                <div class="service-num">06 · капитал</div>
+                <div class="service-icon" aria-hidden="true"><svg viewBox="0 0 48 48"><path d="M14 17h20"/><path d="M16 17l-6 10h12z"/><path d="M32 17l-6 10h12z"/><path d="M18 40h12"/></svg></div>
+                <h4>Консалтинг и оценка</h4>
+                <p>Аудит объекта, анализ доходности, рекомендации по повышению ликвидности, подготовка к продаже или реструктуризации актива.</p>
+              </div>
+              <div class="service-list">
+                <span>аудит арендного потенциала</span>
+                <span>рекомендации по капитализации</span>
+                <span>план улучшений объекта</span>
+              </div>
+            </article>
+          </div>
+
+          <div class="process-strip" id="process">
+            <div class="process-item"><b>01 / Заявка</b><span>Фиксируем тип объекта, задачи собственника и текущие ограничения.</span></div>
+            <div class="process-item"><b>02 / Аудит</b><span>Осматриваем объект, анализируем аренду, технику и финансовую модель.</span></div>
+            <div class="process-item"><b>03 / Передача</b><span>Оформляем договор, документы и контур ответственности.</span></div>
+            <div class="process-item"><b>04 / Управление</b><span>Ведём арендаторов, эксплуатацию, финансы и подрядчиков.</span></div>
+            <div class="process-item"><b>05 / Отчётность</b><span>Собственник получает понятный регулярный отчёт и решения к согласованию.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="objects">
+      <div class="wrap">
+        <div class="section__head">
+          <div>
+            <p class="eyebrow">Направления</p>
+            <h2>Работаем с объектами, где важны доход и состояние</h2>
+          </div>
+          <p>Коммерческая недвижимость, апартаменты, жилые инвестиционные объекты и смешанные активы требуют разных сценариев управления, но одного уровня контроля.</p>
+        </div>
+        <div class="portfolio-tease">
+          <article class="tease-card">
+            <div class="tease-card__image"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=82" alt="Бизнес-центр"></div>
+            <div class="tease-card__text"><div><div class="label">коммерческая</div><h3>Бизнес-центры</h3><p>Арендаторы, инженерия, МОП, заполняемость и договорной контур.</p></div><div class="small">B / B+ · офисы · ритейл</div></div>
+          </article>
+          <article class="tease-card">
+            <div class="tease-card__image"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1200&q=82" alt="Общие зоны"></div>
+            <div class="tease-card__text"><div><div class="label">среда</div><h3>Торговые объекты</h3><p>Поток арендаторов, состояние входных групп и работа с платежами.</p></div><div class="small">street retail · ТЦ · сервисы</div></div>
+          </article>
+          <article class="tease-card">
+            <div class="tease-card__image"><img src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1200&q=82" alt="Городская архитектура"></div>
+            <div class="tease-card__text"><div><div class="label">жилая</div><h3>Апартаменты</h3><p>Сдача в аренду, содержание, коммуникация с жильцами и отчёты.</p></div><div class="small">ЖК · доходные дома · квартиры</div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap cta" id="contacts">
+      <div class="cta__side">
+        <p class="eyebrow">Для собственника</p>
+        <h2>Хотите, чтобы ваш объект работал эффективнее?</h2>
+        <p>Передайте управление Фиденте: арендаторы, эксплуатация, финансы и отчётность будут собраны в понятную систему.</p>
+      </div>
+      <div class="cta__panel">
+        <p class="eyebrow">Оставить заявку</p>
+        <h3 class="cta__panel-title">Начать разговор</h3>
+        <div class="field"><span>Ваше имя</span><span>01</span></div>
+        <div class="field"><span>Телефон</span><span>02</span></div>
+        <div class="field"><span>Кто вы?</span><span>Собственник / Инвестор ↓</span></div>
+        <div class="field"><span>Что вас интересует?</span><span>Управление / Инвестиции ↓</span></div>
+        <a class="btn btn--gold" href="mailto:info@uk-fidenta.ru">Оставить заявку</a>
+      </div>
+      <div class="cta__side">
+        <p class="eyebrow">Для инвестора</p>
+        <h2>Хотите, чтобы ваши деньги работали?</h2>
+        <p>Инвестиции через управление объектами: коммерческая недвижимость, арендный поток и прозрачная модель сопровождения.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="about">
+    <div class="wrap footer__grid">
+      <div class="footer__col">
+        <div class="brand">
+          <div class="mark">Ф</div>
+          <div><div class="brand__name">Фидента</div><div class="brand__sub">управляющая компания</div></div>
+        </div>
+        <p class="footer__note">Управление коммерческой недвижимостью, арендным потоком и инвестиционными сценариями через прозрачную операционную систему.</p>
+      </div>
+      <div class="footer__col">
+        <div class="footer__title">Разделы</div>
+        <div class="footer__links">
+          <a href="#top">Главная</a>
+          <a href="invest.html">Инвестиции</a>
+          <a href="#services">Услуги</a>
+          <a href="#objects">Объекты</a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__title">Направления</div>
+        <div class="footer__links">
+          <span>Управление объектами</span>
+          <span>Арендный поток</span>
+          <span>Эксплуатация</span>
+          <span>Инвестиционные сделки</span>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__title">Контакты</div>
+        <div class="footer__links">
+          <a href="mailto:info@uk-fidenta.ru">info@uk-fidenta.ru</a>
+          <span>Санкт-Петербург</span>
+          <span>Телефон · заглушка</span>
+          <a href="#contacts">Оставить заявку</a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <div class="footer__title">Правовая информация и сбор данных</div>
+        <div class="footer__links">
+          <a href="legal.html">Правовая информация</a>
+          <a href="privacy.html">Политика конфиденциальности</a>
+          <a href="cookies.html">Политика cookies</a>
+          <a href="personal-data.html">Согласие на обработку данных</a>
+          <span>Формы сайта используют данные только для обратной связи</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap demo-footer-nav" aria-label="Демо-навигация">
+      <span class="demo-footer-nav__label">Демо-версии</span>
+      <a class="is-active" href="https://sweeded3.github.io/Fidenta0.1/" aria-current="page">V1</a>
+      <a href="https://sweeded3.github.io/Fidenta0.2/">V2</a>
+      <a href="https://sweeded3.github.io/Fidenta0.3/">V3</a>
+      <a href="https://sweeded3.github.io/Fidenta0.4/">V4</a>
+      <a class="demo-footer-nav__main" href="presentation.html">Презентация</a>
+      <a class="demo-footer-nav__download" href="docs/fidenta-kp.pdf" download>Скачать КП</a>
+      <a class="demo-footer-nav__download" href="docs/fidenta-contract.pdf" download>Скачать договор</a>
+    </div>
+
+    <div class="wrap footer__bottom">
+      <span>© 2013–2026 ООО «УК Фидента». Концепт главной страницы.</span>
+      <span>Перед запуском заменить заглушки и стоковые изображения на актуальные данные компании.</span>
+    </div>
+  </footer>
+  <!-- Стоковые изображения: Unsplash, free-to-use license. Перед запуском заменить на фотографии объектов Фиденты или закрепить конкретные лицензированные ассеты. -->
+
+</body>
+</html>
