@@ -26,40 +26,90 @@
 }
 
 @media (max-width: 740px) {
+  .topbar {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+  }
+
   .topbar__inner {
-    height: auto !important;
+    height: 76px !important;
     min-height: 76px !important;
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    align-items: stretch !important;
-    gap: 10px !important;
-    padding: 12px 0 10px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    padding: 0 !important;
+    position: relative !important;
   }
 
   .brand {
     min-width: 0 !important;
+    flex: 1 1 auto !important;
   }
 
   .brand__name {
     font-size: 22px !important;
   }
 
+  .brand__sub {
+    font-size: 9px !important;
+  }
+
+  .topbar__inner:after {
+    content: "☰";
+    width: 46px !important;
+    height: 46px !important;
+    flex: 0 0 46px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid var(--line-strong) !important;
+    background: rgba(255,250,241,.72) !important;
+    color: var(--ink) !important;
+    font-size: 24px !important;
+    line-height: 1 !important;
+  }
+
   .nav {
+    position: absolute !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: calc(100% + 8px) !important;
     display: grid !important;
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 6px !important;
+    grid-template-columns: 1fr !important;
+    gap: 0 !important;
     width: 100% !important;
-    padding: 0 !important;
+    padding: 10px 14px !important;
+    background: rgba(255,250,241,.98) !important;
+    border: 1px solid var(--line) !important;
+    box-shadow: 0 18px 48px rgba(68,50,28,.16) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transform: translateY(-8px) !important;
+    transition: opacity .2s ease, transform .2s ease !important;
+  }
+
+  .topbar:hover .nav,
+  .topbar:focus-within .nav {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    transform: translateY(0) !important;
   }
 
   .nav a {
-    padding: 9px 6px !important;
-    border: 1px solid var(--line) !important;
-    background: rgba(255,250,241,.56) !important;
-    font-size: 11px !important;
-    line-height: 1.15 !important;
-    text-align: center !important;
+    padding: 13px 0 !important;
+    border: 0 !important;
+    border-bottom: 1px solid var(--line) !important;
+    background: transparent !important;
+    font-size: 15px !important;
+    line-height: 1.2 !important;
+    text-align: left !important;
     white-space: normal !important;
+  }
+
+  .nav a:last-child {
+    border-bottom: 0 !important;
   }
 
   .nav a.active:after {
