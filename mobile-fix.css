@@ -1,4 +1,30 @@
-/* V2 mobile fixes: decorative icons, compact footer, visible mobile menu */
+/* V2 layout fixes */
+
+/* Убираем декоративные круги, которые съезжают в CTA-блоке */
+.cta__side:before {
+  display: none !important;
+}
+
+/* Чуть стабильнее крупные заголовки */
+.hero h1,
+.section__head h2,
+.service-top__copy h3,
+.service-card h4,
+.cta h2 {
+  line-height: 1.08 !important;
+  padding-top: .08em !important;
+  overflow: visible !important;
+}
+
+/* Меньше лишнего воздуха перед CTA */
+.portfolio-tease {
+  margin-bottom: 34px !important;
+}
+
+.cta {
+  margin-top: 34px !important;
+}
+
 @media (max-width: 740px) {
   .topbar__inner {
     height: auto !important;
@@ -12,6 +38,10 @@
 
   .brand {
     min-width: 0 !important;
+  }
+
+  .brand__name {
+    font-size: 22px !important;
   }
 
   .nav {
@@ -40,6 +70,15 @@
     display: none !important;
   }
 
+  .hero h1 {
+    font-size: clamp(42px, 13vw, 56px) !important;
+    line-height: 1.02 !important;
+  }
+
+  .hero__copy {
+    padding: 30px 22px !important;
+  }
+
   .service-card:before,
   .service-icon {
     display: none !important;
@@ -47,18 +86,29 @@
 
   .service-card h4 {
     margin-top: 22px !important;
-    padding-top: .08em !important;
-    line-height: 1.08 !important;
-    overflow: visible !important;
     max-width: none !important;
   }
 
-  .section__head h2,
-  .service-top__copy h3,
-  .cta h2 {
-    line-height: 1.08 !important;
-    padding-top: .08em !important;
-    overflow: visible !important;
+  .portfolio-tease {
+    gap: 14px !important;
+    margin-bottom: 24px !important;
+  }
+
+  .tease-card {
+    min-height: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .tease-card__image {
+    min-height: 220px !important;
+  }
+
+  .tease-card__text {
+    padding: 24px !important;
+  }
+
+  .cta {
+    margin-top: 26px !important;
   }
 
   .demo-footer-nav {
